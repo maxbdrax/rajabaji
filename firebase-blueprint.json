@@ -1,0 +1,94 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and balance information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "balance": { "type": "number" },
+        "role": { "type": "string", "enum": ["admin", "user"] },
+        "phone": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "balance", "role"]
+    },
+    "Deposit": {
+      "title": "Deposit",
+      "description": "Deposit request from a user",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "amount": { "type": "number" },
+        "method": { "type": "string", "enum": ["bkash", "nagad", "rocket"] },
+        "transactionId": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "success", "rejected"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "amount", "method", "transactionId", "status", "createdAt"]
+    },
+    "Withdrawal": {
+      "title": "Withdrawal",
+      "description": "Withdrawal request from a user",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "amount": { "type": "number" },
+        "method": { "type": "string", "enum": ["bkash", "nagad", "rocket"] },
+        "accountNumber": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "success", "rejected"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "amount", "method", "accountNumber", "status", "createdAt"]
+    },
+    "PaymentConfig": {
+      "title": "PaymentConfig",
+      "description": "Admin configuration for rotating payment numbers",
+      "type": "object",
+      "properties": {
+        "bkash": { "type": "array", "items": { "type": "string" } },
+        "nagad": { "type": "array", "items": { "type": "string" } },
+        "rocket": { "type": "array", "items": { "type": "string" } },
+        "lastRotation": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Bet": {
+      "title": "Bet",
+      "description": "Game bet record",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "game": { "type": "string", "enum": ["slots", "aviator"] },
+        "amount": { "type": "number" },
+        "winAmount": { "type": "number" },
+        "status": { "type": "string", "enum": ["win", "loss"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "game", "amount", "winAmount", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/deposits/{depositId}": {
+      "schema": "Deposit",
+      "description": "Deposit requests"
+    },
+    "/withdrawals/{withdrawalId}": {
+      "schema": "Withdrawal",
+      "description": "Withdrawal requests"
+    },
+    "/config/payments": {
+      "schema": "PaymentConfig",
+      "description": "Payment number configuration"
+    },
+    "/bets/{betId}": {
+      "schema": "Bet",
+      "description": "Game history"
+    }
+  }
+}

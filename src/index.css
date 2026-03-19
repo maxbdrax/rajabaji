@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ck-bg: #002d26;
+  --color-ck-card: #004d40;
+  --color-ck-accent: #ffc107;
+  --color-ck-teal: #00695c;
+  --color-ck-teal-light: #00796b;
+  --color-ck-text-gold: #ffc107;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-ck-bg text-white font-sans;
+  }
+}
+
+.glass-card {
+  @apply bg-ck-card/50 backdrop-blur-md border border-white/10;
+}
+
+.bottom-nav-active {
+  @apply text-ck-accent;
+}
+
+.bottom-nav-inactive {
+  @apply text-white/60;
+}
